@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.zadanie1.MainActivity">
+    <group
+            android:checkableBehavior="single">
+        <item android:title="Simple" android:id="@+id/simpleAlg"/>
+        <item android:title="Conway" android:id="@+id/conwayAlg"/>
+        <item android:title="Trig1" android:id="@+id/trig1Alg"/>
+        <item android:title="trig2" android:id="@+id/trig2Alg"/>
+    </group>
+</menu>
