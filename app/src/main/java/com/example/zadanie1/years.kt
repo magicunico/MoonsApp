@@ -16,12 +16,15 @@ import java.time.format.DateTimeFormatter
 
 
 class years : AppCompatActivity() {
-    var yearCheck : Int = 0
+    var yearCheck : Int = 1900
+    var yearMinus : Int = 0
+    var yearPlus : Int = 0
     var method =1
     var tables=ArrayList<TextView>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+
 
 
         super.onCreate(savedInstanceState)
@@ -43,11 +46,45 @@ class years : AppCompatActivity() {
 
 
         confirm.setOnClickListener {
+            if(enterYear.text.toString().isNullOrEmpty()){
+                year1.text="WRONG DATE"
+            }else {
+                yearCheck = enterYear.text.toString().toInt()
+            }
             clearTable()
-            countFulls()
+            countFulls(yearCheck)
         }
 
+        minusYear.setOnClickListener {
+            clearTable()
+            if(enterYear.text.toString().isNullOrEmpty()){
+                year1.text="WRONG DATE"
+            }else {
+                yearCheck = enterYear.text.toString().toInt()
+            }
+            yearMinus=yearCheck.minus(1)
+            if(yearMinus<1900){
+                year1.setText("WYBIERZ ROK POMIĘDZY 1900 A 2200")
+            }else{
+            enterYear.setText(yearMinus.toString())
+            countFulls(yearMinus)}
 
+        }
+        addYear.setOnClickListener {
+            clearTable()
+            if(enterYear.text.toString().isNullOrEmpty()){
+                year1.text="WRONG DATE"
+            }else {
+                yearCheck = enterYear.text.toString().toInt()
+            }
+            yearPlus=yearCheck.plus(1)
+            if(yearPlus>2200){
+                year1.setText("WYBIERZ ROK POMIĘDZY 1900 A 2200")
+            }else {
+                enterYear.setText(yearPlus.toString())
+                countFulls(yearPlus)
+            }
+        }
 
     }
 
@@ -66,6 +103,7 @@ class years : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        yearCheck=enterYear.text.toString().toInt()
                when(item.itemId){
             R.id.simpleAlg->{
                 if(item.isChecked)
@@ -73,7 +111,7 @@ class years : AppCompatActivity() {
                 else
                     item.isChecked=true
                 method=1
-                countFulls()
+                countFulls(yearCheck)
                 return true
             }
             R.id.conwayAlg->{
@@ -82,7 +120,7 @@ class years : AppCompatActivity() {
                 else
                     item.isChecked=true
                 method=2
-                countFulls()
+                countFulls(yearCheck)
                 return true
             }
             R.id.trig1Alg->{
@@ -91,7 +129,7 @@ class years : AppCompatActivity() {
                 else
                     item.isChecked=true
                 method=3
-                countFulls()
+                countFulls(yearCheck)
 
                 return true
             }
@@ -101,7 +139,7 @@ class years : AppCompatActivity() {
                 else
                     item.isChecked=true
                 method=4
-                countFulls()
+                countFulls(yearCheck)
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -109,9 +147,9 @@ class years : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun countFulls(){
+    fun countFulls(yearCheck : Int){
         var fulls = java.util.ArrayList<String>()
-        yearCheck=enterYear.text.toString().toInt()
+
         if(method==1){
             fulls=simpleFulls(yearCheck)
         }else if(method==2){
@@ -126,7 +164,7 @@ class years : AppCompatActivity() {
             if(fulls[index].isNullOrEmpty()){
                 break
             }
-            tables[index].text = fulls[index]
+            tables[index].text = (index+1).toString()+". "+fulls[index]
         }
     }
 
@@ -144,7 +182,7 @@ class years : AppCompatActivity() {
                 break
             }
             // zapisz ja jako string do fullMoons
-            fullMoons.add(fullMoon.dayOfMonth.toString() + "." + fullMoon.monthValue.toString() + "." + fullMoon.year.toString())
+            fullMoons.add(fullMoon.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
             // ustaw ta date jako kolejna do sprawdzenia
             inspectedDate = fullMoon.plusDays(1)
         }
@@ -164,7 +202,7 @@ class years : AppCompatActivity() {
                 break
             }
             // zapisz ja jako string do fullMoons
-            fullMoons.add(fullMoon.dayOfMonth.toString() + "." + fullMoon.monthValue.toString() + "." + fullMoon.year.toString())
+            fullMoons.add(fullMoon.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
             // ustaw ta date jako kolejna do sprawdzenia
             inspectedDate = fullMoon.plusDays(1)
         }
@@ -186,7 +224,7 @@ class years : AppCompatActivity() {
                 break
             }
             // zapisz ja jako string do fullMoons
-            fullMoons.add(fullMoon.dayOfMonth.toString() + "." + fullMoon.monthValue.toString() + "." + fullMoon.year.toString())
+            fullMoons.add(fullMoon.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
             // ustaw ta date jako kolejna do sprawdzenia
             inspectedDate = fullMoon.plusDays(1)
         }
@@ -207,7 +245,7 @@ class years : AppCompatActivity() {
                 break
             }
             // zapisz ja jako string do fullMoons
-            fullMoons.add(fullMoon.dayOfMonth.toString() + "." + fullMoon.monthValue.toString() + "." + fullMoon.year.toString())
+            fullMoons.add(fullMoon.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
             // ustaw ta date jako kolejna do sprawdzenia
             inspectedDate = fullMoon.plusDays(1)
         }

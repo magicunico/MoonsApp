@@ -47,11 +47,13 @@ class MainActivity : AppCompatActivity() {
         if(proc<=5){
             moonImg.setImageResource(R.drawable.newmoon)
         }else if(proc>=90){
-            moonImg.setImageResource(R.drawable.fullmoon)
-        }else if(proc>5 && proc<50){
-            moonImg.setImageResource((R.drawable.kwadra))
+            moonImg.setImageResource(R.drawable.newmoon)
+        }else if(proc>46 && proc<54){
+            moonImg.setImageResource((R.drawable.fullmoon))
         }
-        else{
+        else if((proc>5 && proc<35)||(proc>65 && proc<90)){
+            moonImg.setImageResource(R.drawable.kwadra)
+        }else{
             moonImg.setImageResource(R.drawable.partmoon)
         }
 
@@ -85,9 +87,9 @@ class MainActivity : AppCompatActivity() {
                   item.isChecked=true
               method=1
               var proc=simple(current.year,current.monthValue,current.dayOfMonth).toInt()*100/30
-              if(proc>50){
-                  proc=proc-50
-              }
+//              if(proc>50){
+//                  proc=proc-50
+//              }
               dzis.text="Dziś: "+proc.toString()+" % "
               nastepnaPelnia.text="Następna pełnia: "+simpleNextMoon(current.year,current.monthValue,current.dayOfMonth).format(
                   DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString()
@@ -102,9 +104,9 @@ class MainActivity : AppCompatActivity() {
                   item.isChecked=true
               method=2
               var proc2=conway(current.year,current.monthValue,current.dayOfMonth).toInt()*100/30
-              if(proc2>50){
-                  proc2=proc2-50
-              }
+//              if(proc2>50){
+//                  proc2=proc2-50
+//              }
               dzis.text="Dziś: "+proc2.toString()+" % "
               nastepnaPelnia.text="Następna pełnia: "+conwayNextMoon(current.year,current.monthValue,current.dayOfMonth).format(
                   DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString()
@@ -119,9 +121,9 @@ class MainActivity : AppCompatActivity() {
                   item.isChecked=true
               method=3
               var proc3=trig1(current.year,current.monthValue,current.dayOfMonth).toInt()*100/30
-              if(proc3>50){
-                  proc3=proc3-50
-              }
+//              if(proc3>50){
+//                  proc3=proc3-50
+//              }
               dzis.text="Dziś: "+proc3.toString()+" % "
               nastepnaPelnia.text="Następna pełnia: "+trig1NextMoon(current.year,current.monthValue,current.dayOfMonth).format(
                   DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString()
@@ -136,9 +138,9 @@ class MainActivity : AppCompatActivity() {
                   item.isChecked=true
               method=4
               var proc4=trig2(current.year,current.monthValue,current.dayOfMonth).toInt()*100/30
-              if(proc4>50){
-                  proc4=proc4-50
-              }
+//              if(proc4>50){
+//                  proc4=proc4-50
+//              }
               dzis.text="Dziś: "+proc4.toString()+" % "
               nastepnaPelnia.text="Następna pełnia: "+trig2NextMoon(current.year,current.monthValue,current.dayOfMonth).format(
                   DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString()
@@ -282,7 +284,7 @@ class MainActivity : AppCompatActivity() {
         var nextDate=LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(day)
         var res : Double
         res=simple(nextDate.year,nextDate.monthValue,nextDate.dayOfMonth)
-        while(res != 16.0){
+        while(res != 15.0){
             nextDate=nextDate.plusDays(1)
             res=simple(nextDate.year,nextDate.monthValue,nextDate.dayOfMonth)
         }
@@ -323,7 +325,7 @@ class MainActivity : AppCompatActivity() {
         var prevDate=LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(day)
         var res : Double
         res=conway(prevDate.year,prevDate.monthValue,prevDate.dayOfMonth)
-        while(res != 0.0){
+        while(res != 1.0){
             prevDate=prevDate.minusDays(1)
             res=conway(prevDate.year,prevDate.monthValue,prevDate.dayOfMonth)
         }
@@ -350,7 +352,7 @@ class MainActivity : AppCompatActivity() {
         var prevDate=LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(day)
         var res : Double
         res=trig1(prevDate.year,prevDate.monthValue,prevDate.dayOfMonth)
-        while(res != 0.0){
+        while(res != 1.0){
             prevDate=prevDate.minusDays(1)
             res=trig1(prevDate.year,prevDate.monthValue,prevDate.dayOfMonth)
         }
@@ -377,7 +379,7 @@ class MainActivity : AppCompatActivity() {
         var prevDate=LocalDateTime.now().withYear(year).withMonth(month).withDayOfMonth(day)
         var res : Double
         res=trig2(prevDate.year,prevDate.monthValue,prevDate.dayOfMonth)
-        while(res != 0.0){
+        while(res != 1.0){
             prevDate=prevDate.minusDays(1)
             res=trig2(prevDate.year,prevDate.monthValue,prevDate.dayOfMonth)
         }
